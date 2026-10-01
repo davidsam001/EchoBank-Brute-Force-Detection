@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EchoBank | Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <header class="top-header">
+
+        <a href="dashboard.html" class="brand">
+            <span class="brand-mark">E</span>
+            <span class="brand-name">Echo<span>Bank</span></span>
+        </a>
+
+        <div class="header-user">
+
+            <div class="user-info">
+                <strong id="userName">Loading...</strong>
+                <span id="userRole">Loading...</span>
+            </div>
+
+            <button id="logoutButton" class="logout-button">
+                Sign out
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="dashboard-container">
+
+        <!-- Welcome section -->
+
+        <section class="dashboard-welcome">
+
+            <div>
+                <p class="eyebrow">ECHOBANK STAFF PORTAL</p>
+
+                <h1>
+                    Welcome back,
+                    <span id="welcomeName">...</span>
+                </h1>
+
+                <p id="dashboardDescription">
+                    Loading your dashboard...
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- Role-specific dashboard -->
+
+        <section id="dashboardContent" class="dashboard-content">
+
+            <div class="loading-state">
+                Loading dashboard...
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+        <p>© 2026 EchoBank Internal Systems</p>
+    </footer>
+
+
+    <!-- Supabase -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Your Supabase client -->
+
+    <script src="js\supabase.js"></script>
+
+    <!-- Dashboard logic -->
+
+    <script src="js\dashboard.js"></script>
+
+</body>
+
+</html>

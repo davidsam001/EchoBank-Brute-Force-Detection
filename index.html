@@ -1,33 +1,268 @@
-secure-bank-portal/
-│
-├── frontend/
-│   ├── index.html
-│   ├── login.html
-│   ├── dashboard.html
-│   ├── messages.html
-│   ├── security.html
-│   ├── alert-details.html
-│   ├── profile.html
-│   │
-│   ├── css/
-│   │   └── style.css
-│   │
-│   └── js/
-│       ├── app.js
-│       ├── auth.js
-│       ├── dashboard.js
-│       ├── messages.js
-│       └── security.js
-│
-├── backend/
-│   ├── app.py
-│   ├── detection_engine.py
-│   └── requirements.txt
-│
-├── database/
-│   ├── schema.sql
-│   └── seed.sql
-│
-├── .env
-├── .gitignore
-└── README.md
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Makes the page responsive on phones and tablets -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EchoBank | Staff Portal</title>
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="frontend\css\style.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+    <header class="top-header">
+
+        <!-- EchoBank logo -->
+        <a href="index.html" class="brand">
+            <span class="brand-mark" aria-hidden="true">
+                <span></span>
+            <span></span>
+            <span></span>
+            </span>
+
+            <span class="brand-name">
+                Echo<span>Bank</span>
+            </span>
+        </a>
+
+        <!-- Secure portal indicator -->
+        <div class="secure-label">
+            <span class="lock-icon">♧</span>
+            <span>Secure Staff Portal</span>
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MAIN LOGIN AREA
+    ========================================== -->
+    <main class="login-main">
+
+        <!-- =====================================
+             LEFT BRANDING PANEL
+        ====================================== -->
+        <section class="brand-panel">
+
+            <div class="brand-content">
+
+                <!-- Large EchoBank logo -->
+                <div class="large-brand">
+
+                    <span class="large-brand-mark" aria-hidden="true">
+                        <span></span>
+                    <span></span>
+                    <span></span>
+                    </span>
+
+                    <div>
+                        <h1>Echo<span>Bank</span></h1>
+                        <p>Staff Portal</p>
+                    </div>
+
+                </div>
+
+
+                <p class="brand-description">
+                    Secure internal workspace for EchoBank staff.
+                </p>
+
+            </div>
+
+
+            <!-- Decorative security illustration -->
+            <div class="security-visual">
+
+                <div class="wave wave-1"></div>
+                <div class="wave wave-2"></div>
+                <div class="wave wave-3"></div>
+                <div class="wave wave-4"></div>
+                <div class="wave wave-5"></div>
+                <div class="wave wave-6"></div>
+
+                <div class="security-dot dot-1"></div>
+                <div class="security-dot dot-2"></div>
+                <div class="security-dot dot-3"></div>
+
+                <!-- Shield -->
+                <div class="shield">
+
+                    <div class="shield-lock">
+
+                        <div class="lock-body">
+                            <div class="keyhole"></div>
+                        </div>
+
+                        <div class="lock-shackle"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             RIGHT LOGIN PANEL
+        ====================================== -->
+        <section class="login-panel">
+
+            <div class="login-card">
+
+                <!-- Heading -->
+                <div class="login-heading">
+                    <h2>Welcome <span>back</span></h2>
+
+                    <p>
+                        Sign in to your staff account.
+                    </p>
+                </div>
+
+
+                <!-- =================================
+                     LOGIN FORM
+                ================================== -->
+                <form id="loginForm">
+
+                    <!-- Email -->
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon email-icon">
+                                ✉
+                            </span>
+
+                            <input type="email" id="email" name="email" placeholder="staff@echobank.com" autocomplete="email" required>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group password-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon lock-input-icon">
+                                ♧
+                            </span>
+
+                            <input type="password" id="password" name="password" placeholder="••••••••••••" autocomplete="current-password" required>
+
+                            <!-- Password visibility button -->
+                            <button type="button" class="password-toggle" id="passwordToggle" aria-label="Show password">
+                                ◉
+                            </button>
+
+                        </div>
+
+                        <!-- Forgot password -->
+                        <a href="forgot-password.html" class="forgot-password">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+                    <p id="loginMessage" class="form-message"></p>
+
+                    <!-- Sign in -->
+                    <button type="submit" class="sign-in-button">
+                        <span>Sign in</span>
+                        <span class="arrow">→</span>
+                    </button>
+
+                </form>
+
+
+                <!-- =================================
+                     SECURITY INFORMATION
+                ================================== -->
+                <div class="security-information">
+
+                    <div class="security-icon">
+                        ♢
+                    </div>
+
+                    <div>
+                        <h3>
+                            Secure staff authentication
+                        </h3>
+
+                        <p>
+                            Your login activity is monitored for security purposes.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     SIGNUP
+                ================================== -->
+                <div class="signup-prompt">
+
+                    <span>Don't have an account?</span>
+
+                    <a href="frontend\signup.html">
+                        Create staff account
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+     FOOTER
+========================================== -->
+    <footer class="footer">
+
+        <p>
+            © 2026 EchoBank. All rights reserved.
+        </p>
+
+        <p>
+            <span class="footer-lock">♧</span> Authorized EchoBank staff only
+        </p>
+
+    </footer>
+
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- EchoBank Supabase configuration -->
+    <script src="frontend/js/supabase.js"></script>
+
+    <!-- Authentication logic -->
+    <script src="frontend/js/auth.js"></script>
+
+</body>
+
+</html>
+
+</html>
