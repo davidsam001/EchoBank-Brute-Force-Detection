@@ -64,6 +64,10 @@ if (signupForm) {
 // LOGIN
 // ==============================
 
+// ==============================
+// LOGIN
+// ==============================
+
 const loginForm = document.getElementById("loginForm");
 const loginMessage = document.getElementById("loginMessage");
 
@@ -72,7 +76,6 @@ if (loginForm) {
     event.preventDefault();
 
     const email = document.getElementById("email").value.trim();
-
     const password = document.getElementById("password").value;
 
     loginMessage.textContent = "Signing in...";
@@ -80,40 +83,103 @@ if (loginForm) {
 
     console.log("Login attempt for:", email);
 
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+    try {
+      const { data, error } = await supabaseClient.functions.invoke(
+        "record-login-attempt",
+        {
+          body: {
+            email: email,
+            password: password,
+          },
+        },
+      );
 
-    // --------------------------------
-    // FAILED LOGIN
-    // --------------------------------
+      if (error) {
+        console.error("Login security function error:", error);
 
-    if (error) {
+        loginMessage.textContent = "Unable to process login. Please try again.";
+
+        loginMessage.style.color = "#ef4444";
+
+        return;
+      }
+
+      // --------------------------------
+      // IP BLOCKED
+      // --------------------------------
+
+      if (data?.blocked) {
+        loginMessage.textContent =
+          "Access temporarily blocked due to suspicious login activity.";
+
+        loginMessage.style.color = "#ef4444";
+
+        console.warn("Login blocked. IP block expires:", data.expires_at);
+
+        return;
+      }
+
+      // --------------------------------
+      // FAILED LOGIN
+      // --------------------------------
+
+      if (!data?.success) {
+        loginMessage.textContent = "Invalid email or password.";
+
+        loginMessage.style.color = "#ef4444";
+
+        // Run the existing brute-force detector
+        const { error: detectionError } = await supabaseClient.rpc(
+          "check_bruteforce_attempt",
+          {
+            p_target_email: email.toLowerCase(),
+            p_ip_address: data?.ip_address || null,
+          },
+        );
+
+        if (detectionError) {
+          console.error("Brute-force detection error:", detectionError);
+        }
+
+        return;
+      }
+
+      // --------------------------------
+      // SUCCESSFUL LOGIN
+      // --------------------------------
+
+      if (data.session) {
+        const { error: sessionError } = await supabaseClient.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token,
+        });
+
+        if (sessionError) {
+          console.error("Failed to establish session:", sessionError);
+
+          loginMessage.textContent =
+            "Login succeeded, but the session could not be established.";
+
+          loginMessage.style.color = "#ef4444";
+
+          return;
+        }
+      }
+
+      console.log("Login successful:", data);
+
+      loginMessage.textContent = "Login successful.";
+
+      loginMessage.style.color = "#22c55e";
+
+      window.location.href = "frontend/dashboard.html";
+    } catch (error) {
       console.error("Login error:", error);
 
-      await recordLoginAttempt(email, false);
-
-      loginMessage.textContent = "Invalid email or password.";
+      loginMessage.textContent = "Unable to process login. Please try again.";
 
       loginMessage.style.color = "#ef4444";
-
-      return;
     }
-
-    // --------------------------------
-    // SUCCESSFUL LOGIN
-    // --------------------------------
-
-    await recordLoginAttempt(email, true);
-
-    console.log("Login successful:", data);
-
-    loginMessage.textContent = "Login successful.";
-
-    loginMessage.style.color = "#22c55e";
-
-    window.location.href = "frontend/dashboard.html";
   });
 } else {
   console.log("Login form was not found on this page.");
@@ -143,25 +209,47 @@ if (passwordToggle && passwordInput) {
 }
 
 // Addiing the monitoring fuunction
+// ==============================
+// SECURITY MONITORING
+// ==============================
+
 async function recordLoginAttempt(email, successful) {
   try {
+    // Ask the Edge Function for the request's source IP
+    const { data: ipData, error: ipError } =
+      await supabaseClient.functions.invoke("record-login-attempt", {
+        body: {
+          email: email.toLowerCase(),
+          successful: successful,
+        },
+      });
+
+    if (ipError) {
+      console.error("Failed to capture IP address:", ipError);
+    }
+
+    const ipAddress = ipData?.ip_address || null;
+
+    // Record the login attempt
     const { error } = await supabaseClient.from("login_attempts").insert({
       email: email.toLowerCase(),
       successful: successful,
       user_agent: navigator.userAgent,
+      ip_address: ipAddress,
     });
 
     if (error) {
       console.error("Failed to record login attempt:", error);
-
       return;
     }
 
-    console.log("Login attempt recorded:", successful);
+    console.log("Login attempt recorded:", {
+      email: email.toLowerCase(),
+      successful: successful,
+      ip_address: ipAddress,
+    });
 
-    // Only check for brute force
-    // after a failed attempt.
-
+    // Only check for brute force after a failed attempt
     if (!successful) {
       const { data: detectionResult, error: detectionError } =
         await supabaseClient.rpc("check_bruteforce_attempt", {

@@ -644,3 +644,290 @@
 
   margin-top: 18px;
 }
+
+/* modal css */
+/* =========================================
+   SECURITY ALERT ACTIONS
+========================================= */
+
+.alert-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.alert-actions button {
+  padding: 8px 13px;
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+}
+
+.details-button {
+  color: #aaa;
+  border: 1px solid #333;
+}
+
+.details-button:hover {
+  color: #fff;
+  border-color: #555;
+}
+
+.investigate-button {
+  color: #f59e0b;
+  border: 1px solid #51401f;
+}
+
+.investigate-button:hover {
+  background: #241d0d;
+}
+
+.resolve-button {
+  color: #39ff88;
+  border: 1px solid #26372d;
+}
+
+.resolve-button:hover {
+  background: #0d2417;
+}
+
+.cancel-button {
+  color: #aaa;
+  border: 1px solid #333;
+  padding: 9px 14px;
+  background: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cancel-button:hover {
+  color: #fff;
+  border-color: #555;
+}
+
+/* =========================================
+   SECURITY INVESTIGATION MODAL
+========================================= */
+
+.security-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.security-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.security-modal-card {
+  position: relative;
+  z-index: 1;
+  width: min(800px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #111;
+  border: 1px solid #292929;
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.security-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 25px;
+  border-bottom: 1px solid #242424;
+}
+
+.security-modal-header h2 {
+  margin-top: 5px;
+  text-transform: capitalize;
+}
+
+.modal-close {
+  border: 0;
+  background: transparent;
+  color: #777;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: #fff;
+}
+
+/* =========================================
+   INCIDENT SUMMARY
+========================================= */
+
+.incident-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: #242424;
+  border-bottom: 1px solid #242424;
+}
+
+.incident-summary > div {
+  padding: 18px;
+  background: #111;
+}
+
+.incident-summary span {
+  display: block;
+  color: #666;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 7px;
+}
+
+.incident-summary strong {
+  font-size: 13px;
+  word-break: break-word;
+}
+
+.incident-severity.high {
+  color: #ef4444;
+}
+
+.incident-severity.medium {
+  color: #f59e0b;
+}
+
+/* =========================================
+   INCIDENT CONTENT
+========================================= */
+
+.incident-description,
+.incident-activity,
+.incident-notes {
+  padding: 22px;
+  border-bottom: 1px solid #242424;
+}
+
+.incident-description h3,
+.incident-activity h3,
+.incident-notes h3 {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.incident-description p,
+.incident-notes p {
+  color: #999;
+  line-height: 1.6;
+}
+
+.incident-attempt {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid #202020;
+}
+
+.incident-attempt strong {
+  display: block;
+  color: #ef4444;
+  font-size: 13px;
+}
+
+.incident-attempt small {
+  display: block;
+  margin-top: 4px;
+  color: #666;
+}
+
+.incident-attempt > span {
+  max-width: 55%;
+  color: #666;
+  font-size: 11px;
+  text-align: right;
+  word-break: break-word;
+}
+
+/* =========================================
+   RESOLUTION FORM
+========================================= */
+
+.resolution-form {
+  padding: 25px;
+}
+
+.resolution-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.resolution-form textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 14px;
+  resize: vertical;
+  background: #0b0b0b;
+  border: 1px solid #2b2b2b;
+  border-radius: 7px;
+  color: #ddd;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.resolution-form textarea:focus {
+  border-color: #36563f;
+}
+
+.resolution-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* =========================================
+   SECURITY ERROR
+========================================= */
+
+.security-error strong {
+  display: block;
+  color: #ef4444;
+  margin-bottom: 8px;
+}
+
+.security-error p {
+  color: #777;
+  font-size: 13px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+  .incident-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .incident-attempt {
+    flex-direction: column;
+  }
+
+  .incident-attempt > span {
+    max-width: 100%;
+    text-align: left;
+  }
+}
